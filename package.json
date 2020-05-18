@@ -1,0 +1,27 @@
+{
+  "name": "colorsite",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aidankeenan/colorsite.git"
+  },
+  "author": "aidan keenan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aidankeenan/colorsite/issues"
+  },
+  "homepage": "https://github.com/aidankeenan/colorsite#readme",
+  "dependencies": {
+    "express": "*",
+    "request": "*",
+    "cors": "*",
+    "querystring": "*",
+    "cookieparser": "*",
+    "cookie-parser": "*"
+  }
+}
