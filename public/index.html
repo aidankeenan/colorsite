@@ -91,26 +91,47 @@
           alert('There was an error during the authentication');
         } else {
           if (access_token) {
+            var myVar = setInterval(refresher, 1000);
             
-            $.ajax({
+          } else {
+              // render initial screen
+              $('#login').show();
+              $('#loggedin').hide();
+          }
+        }
+
+        
+
+        function refresher() {
+          $.ajax({
               url: 'https://api.spotify.com/v1/me/player/currently-playing',
               headers: {
                 'Authorization': 'Bearer ' + access_token
               },
               success: function(response) {
-                var response = response;
-                var track = response.item;
-                var id = track.id;
-                window.globalid = id; 
-                var artists = track.artists
-                var primaryartist = artists[0].name;
-                document.getElementById("nowplaying").innerHTML = track.name + ' - ' + primaryartist;
-                $.ajax({
-                    url: 'https://api.spotify.com/v1/audio-features/' + id,
+                var track;
+                var checktrack = response.item;
+                var title = checktrack.name;
+                var checkid = checktrack.id;
+                var newartists = checktrack.artists;
+                var newprimaryartist = newartists[0].name;
+                var newinfo = {"id": checkid, "artist": newprimaryartist, "title": title}
+                if (checkid != track) {
+                  imagemaker(newinfo);
+                  track = checkid;
+                };
+              }
+          });
+        };
+
+        function imagemaker(newinfo) {
+          $.ajax({
+                    url: 'https://api.spotify.com/v1/audio-features/' + newinfo.id,
                     headers: {
                       'Authorization': 'Bearer ' + access_token
                     },
                     success: function(response) {
+                      // console.log("secondary requester"); //test
                       var features = response;
                       var dur = features.duration_ms;
                       var mode = features.mode;
@@ -170,41 +191,13 @@
                            console.log('very high');
                           speedswitcher('../styles/speed0.css');
                       };
-                      var info = {"dur": dur, "mode": mode, "dance": dance, "energy": energy, "valence": valence, "tempo": tempo};
+                      var features = {"dur": dur, "mode": mode, "dance": dance, "energy": energy, "valence": valence, "tempo": tempo};
+                      document.getElementById("nowplaying").innerHTML = newinfo.title + ' - ' + newinfo.artist;
                   
                       $('#login').hide();
                       $('#loggedin').show();
                     }
                   });
-              
-                $('#login').hide();
-                $('#loggedin').show();
-              }
-            });
-
-          } else {
-              // render initial screen
-              $('#login').show();
-              $('#loggedin').hide();
-          }
-        }
-
-        var myVar = setInterval(refresher, 1000);
-
-        function refresher() {
-          $.ajax({
-              url: 'https://api.spotify.com/v1/me/player/currently-playing',
-              headers: {
-                'Authorization': 'Bearer ' + access_token
-              },
-              success: function(response) {
-                var checktrack = response.item;
-                var checkid = checktrack.id;
-                if (checkid != globalid) {
-                  location.reload();
-                };
-              }
-          });
         };
 
       })();
