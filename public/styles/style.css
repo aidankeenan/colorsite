@@ -12,10 +12,12 @@
 {
   margin: auto;
   color: #e3ded9;
+  border-radius: 15px;
 }
 
 #fsbutton
 {
+  border-radius: 15px;
   float: right;
 }
 
