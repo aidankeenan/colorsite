@@ -1,0 +1,49 @@
+#login, #loggedin {
+  display: none;
+}
+.text-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 500px;
+}
+
+.btn-primary
+{
+  margin: auto;
+  color: #e3ded9;
+}
+
+#fsbutton
+{
+  float: right;
+}
+
+#nowplaying
+{
+  left: 10px;
+  position: fixed;
+  bottom: 20px;
+}
+
+body 
+{
+    color: #383F51;
+    margin: auto;
+    font-family: Bangers;
+    align-content: center;
+    min-height: 100vh;
+}
+
+@keyframes gradient 
+{
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
