@@ -15,7 +15,7 @@ var cookieParser = require('cookie-parser');
 
 var client_id = '4f67416c80c84a308eb0b09b6fadb1a0'; // Your client id
 var client_secret = 'ce837a8b92144535bce61383e336eed5'; // Your secret
-var redirect_uri = 'https://sleepy-badlands-37221.herokuapp.com/callback'; // Your redirect uri   sleepy-badlands-37221.herokuapp.com
+var redirect_uri = 'https://sleepy-badlands-37221.herokuapp.com/callback'; // Your redirect uri   https://sleepy-badlands-37221.herokuapp.com/callback
 
 /**
  * Generates a random string containing numbers and letters

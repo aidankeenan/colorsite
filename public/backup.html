@@ -27,7 +27,7 @@
   <body id="bod">
     <div class="container">
       <div id="login">
-        <a href="/login" class="btn btn-primary">Log in with Spotify</a>
+        <a href="/login" id="loginbtn" class="btn btn-primary">Log in with Spotify</a>
       </div>
       <div id="loggedin">
         <button id="fsbutton" onclick="openFullscreen(); buttontoggle();">Fullscreen</button>
@@ -103,101 +103,108 @@
         
 
         function refresher() {
+          var track;
           $.ajax({
               url: 'https://api.spotify.com/v1/me/player/currently-playing',
               headers: {
                 'Authorization': 'Bearer ' + access_token
               },
               success: function(response) {
-                var track;
-                var checktrack = response.item;
-                var title = checktrack.name;
-                var checkid = checktrack.id;
-                var newartists = checktrack.artists;
-                var newprimaryartist = newartists[0].name;
-                var newinfo = {"id": checkid, "artist": newprimaryartist, "title": title}
-                if (checkid != track) {
-                  imagemaker(newinfo);
-                  track = checkid;
-                };
+                if (response.is_playing) {
+                  var checktrack = response.item;
+                  var title = checktrack.name;
+                  var checkid = checktrack.id;
+                  var newartists = checktrack.artists;
+                  var newprimaryartist = newartists[0].name;
+                  var playing = response.is_playing
+                  var newinfo = {"id": checkid, "artist": newprimaryartist, "title": title, "playing": playing}
+                  if (checkid != track) {
+                    imagemaker(newinfo);
+                    track = checkid;
+                  };
+                }
+                else {
+                  colorswitcher('../styles/prompt.css');
+                  document.getElementById("nowplaying").innerHTML = 'Play some music to see some colors!';
+                }
               }
           });
         };
 
         function imagemaker(newinfo) {
-          $.ajax({
-                    url: 'https://api.spotify.com/v1/audio-features/' + newinfo.id,
-                    headers: {
-                      'Authorization': 'Bearer ' + access_token
-                    },
-                    success: function(response) {
-                      console.log("secondary requester");
-                      var features = response;
-                      var dur = features.duration_ms;
-                      var mode = features.mode;
-                      var dance = features.danceability;
-                      var energy = features.energy;
-                      var valence = features.valence;
-                      var tempo = features.tempo;
-                      // color control
-                      if (valence < 0.1) {
-                          console.log('super duper sad');
-                          colorswitcher('../styles/0.css');
-                      } else if (valence < 0.2) {
-                          console.log('very sad');
-                          colorswitcher('../styles/1.css');
-                      } else if (valence < 0.3) {
-                          console.log('sad');
-                          colorswitcher('../styles/2.css');
-                      } else if (valence < 0.4) {
-                          console.log('kinda sad');
-                          colorswitcher('../styles/3.css');
-                      } else if (valence < 0.5) {
-                          console.log('low neutral');
-                          colorswitcher('../styles/4.css');
-                      } else if (valence < 0.6) {
-                          console.log('high neutral');
-                          colorswitcher('../styles/5.css');
-                      } else if (valence < 0.7) {
-                          console.log('kinda happy');
-                          colorswitcher('../styles/6.css');
-                      } else if (valence < 0.8) {
-                          console.log('happy');
-                          colorswitcher('../styles/7.css');
-                      } else if (valence < 0.9) {
-                          console.log('very happy');
-                          colorswitcher('../styles/8.css');
-                      } else if (valence <= 1.0) {
-                          console.log('super duper happy');
-                          colorswitcher('../styles/9.css');
-                      };
-                      // speed control
-                      if (energy < 0.166) {
-                        console.log('very low');
-                        speedswitcher('../styles/speed5.css');
-                      } else if (energy < 0.3333) {
-                          console.log('low');
-                          speedswitcher('../styles/speed4.css');
-                      } else if (energy < 0.5) {
-                          console.log('med');
-                          speedswitcher('../styles/speed3.css');
-                      } else if (energy < 0.6666) {
-                          console.log('med-high');
-                          speedswitcher('../styles/speed2.css');
-                      } else if (energy < 0.83) {
-                          console.log('high');
-                          speedswitcher('../styles/speed1.css');
-                      } else if (energy < 1.0) {
-                           console.log('very high');
-                          speedswitcher('../styles/speed0.css');
-                      };
-                      var features = {"dur": dur, "mode": mode, "dance": dance, "energy": energy, "valence": valence, "tempo": tempo};
-                      document.getElementById("nowplaying").innerHTML = newinfo.title + ' - ' + newinfo.artist;
-                  
-                      $('#login').hide();
-                      $('#loggedin').show();
-                    }
-                  });
+            $.ajax({
+                      url: 'https://api.spotify.com/v1/audio-features/' + newinfo.id,
+                      headers: {
+                        'Authorization': 'Bearer ' + access_token
+                      },
+                      success: function(response) {
+                        // console.log("secondary requester"); //test
+                        var features = response;
+                        var dur = features.duration_ms;
+                        var mode = features.mode;
+                        var dance = features.danceability;
+                        var energy = features.energy;
+                        var valence = features.valence;
+                        var tempo = features.tempo;
+                        // color control
+                        if (valence < 0.1) {
+                            // console.log('super duper sad');
+                            colorswitcher('../styles/0.css');
+                        } else if (valence < 0.2) {
+                            // console.log('very sad');
+                            colorswitcher('../styles/1.css');
+                        } else if (valence < 0.3) {
+                            // console.log('sad');
+                            colorswitcher('../styles/2.css');
+                        } else if (valence < 0.4) {
+                            // console.log('kinda sad');
+                            colorswitcher('../styles/3.css');
+                        } else if (valence < 0.5) {
+                            // console.log('low neutral');
+                            colorswitcher('../styles/4.css');
+                        } else if (valence < 0.6) {
+                            // console.log('high neutral');
+                            colorswitcher('../styles/5.css');
+                        } else if (valence < 0.7) {
+                            // console.log('kinda happy');
+                            colorswitcher('../styles/6.css');
+                        } else if (valence < 0.8) {
+                            // console.log('happy');
+                            colorswitcher('../styles/7.css');
+                        } else if (valence < 0.9) {
+                            // console.log('very happy');
+                            colorswitcher('../styles/8.css');
+                        } else if (valence <= 1.0) {
+                            // console.log('super duper happy');
+                            colorswitcher('../styles/9.css');
+                        };
+                        // speed control
+                        if (energy < 0.166) {
+                          // console.log('very low');
+                          speedswitcher('../styles/speed5.css');
+                        } else if (energy < 0.3333) {
+                            // console.log('low');
+                            speedswitcher('../styles/speed4.css');
+                        } else if (energy < 0.5) {
+                            // console.log('med');
+                            speedswitcher('../styles/speed3.css');
+                        } else if (energy < 0.6666) {
+                            // console.log('med-high');
+                            speedswitcher('../styles/speed2.css');
+                        } else if (energy < 0.83) {
+                            // console.log('high');
+                            speedswitcher('../styles/speed1.css');
+                        } else if (energy < 1.0) {
+                            // console.log('very high');
+                            speedswitcher('../styles/speed0.css');
+                        };
+                        var features = {"dur": dur, "mode": mode, "dance": dance, "energy": energy, "valence": valence, "tempo": tempo};
+                        document.getElementById("nowplaying").innerHTML = newinfo.title + ' - ' + newinfo.artist;
+                    
+                        $('#login').hide();
+                        $('#loggedin').show();
+                      }
+                    });
         };
 
       })();
