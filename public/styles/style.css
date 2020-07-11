@@ -1,6 +1,20 @@
-#login, #loggedin {
+/* some button inspiration drawn from codepen.io */
+
+@import url('https://fonts.googleapis.com/css?family=Raleway:300,400');
+
+body 
+{
+  margin: auto;
+  font-family: 'Raleway', sans-serif;
+  align-content: center;
+  min-height: 100vh;
+}
+
+#login, #loggedin 
+{
   display: none;
 }
+
 .text-overflow {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -8,17 +22,56 @@
   width: 500px;
 }
 
-.btn-primary
+.btn 
 {
-  margin: auto;
-  color: #e3ded9;
-  border-radius: 15px;
+  background-color: ivory;
+  display: inline-flex;
+  height: 40px;
+  width: 150px;
+  border: 2px solid #BFC0C0;
+  margin: 20px 20px 20px 20px;
+  color: thistle;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: .8em;
+  letter-spacing: 1.5px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-#fsbutton
+#login 
 {
-  border-radius: 15px;
-  float: right;
+  position: fixed;
+  overflow: hidden;
+  cursor: pointer;
+}
+  
+#login a 
+{
+  position: fixed;
+  transition: all .45s ease-Out;
+}
+  
+#translate 
+{
+  transform: rotate(50deg);
+  width: 100%;
+  height: 250%;
+  left: -200px;
+  top: -30px;
+  background: thistle;
+  position: absolute;
+  transition: all .3s ease-Out;
+}
+  
+#login:hover #translate 
+{
+  left: 0;
+}
+
+#login:hover a {
+  color: ivory;
 }
 
 #nowplaying
@@ -26,15 +79,6 @@
   left: 10px;
   position: fixed;
   bottom: 20px;
-}
-
-body 
-{
-    color: #383F51;
-    margin: auto;
-    font-family: Bangers;
-    align-content: center;
-    min-height: 100vh;
 }
 
 @keyframes gradient 
