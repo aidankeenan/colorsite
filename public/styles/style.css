@@ -24,8 +24,8 @@ body
 
 #fsbtn
 {
-  position: static;
-  float: right;
+  position: fixed;
+  right: 15 px;
 }
 
 .btn 
