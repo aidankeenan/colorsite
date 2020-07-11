@@ -22,6 +22,11 @@ body
   width: 500px;
 }
 
+#fsbtn
+{
+  float: right;
+}
+
 .btn 
 {
   background-color: ivory;
@@ -38,11 +43,6 @@ body
   align-items: center;
   justify-content: center;
   overflow: hidden;
-}
-
-#fsbtn
-{
-  float: right;
 }
 
 #login 
