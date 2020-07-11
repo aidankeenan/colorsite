@@ -6,6 +6,7 @@ body
 
 #nowplaying
 {
+    color: #383F51;
     position: fixed;
     top: 50%;
     left: 50%;

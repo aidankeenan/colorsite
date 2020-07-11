@@ -31,7 +31,7 @@
       </div>
       <div id="loggedin">
         <button id="fsbutton" onclick="openFullscreen(); buttontoggle();">Fullscreen</button>
-        <h2 id="nowplaying"></h2>
+        <h2 id="nowplaying">Play some music to see some colors!</h2>
       </div>
     </div>
 
@@ -91,8 +91,7 @@
           alert('There was an error during the authentication');
         } else {
           if (access_token) {
-            var myVar = setInterval(refresher, 1000);
-            
+            var myVar = setInterval(refresher, 1000); //SETS REFRESH, ENABLES CLEAN UPDATE
           } else {
               // render initial screen
               $('#login').show();
@@ -110,20 +109,26 @@
                 'Authorization': 'Bearer ' + access_token
               },
               success: function(response) {
-                if (response.is_playing) {
-                  var checktrack = response.item;
-                  var title = checktrack.name;
-                  var checkid = checktrack.id;
-                  var newartists = checktrack.artists;
-                  var newprimaryartist = newartists[0].name;
-                  var playing = response.is_playing
-                  var newinfo = {"id": checkid, "artist": newprimaryartist, "title": title, "playing": playing}
-                  if (checkid != track) {
-                    imagemaker(newinfo);
-                    track = checkid;
-                  };
-                }
-                else {
+                $('#login').hide();
+                $('#loggedin').show(); 
+                if (response != undefined) {
+                  if (response.is_playing) {
+                    var playing = response.is_playing;
+                    var checktrack = response.item;
+                    var title = checktrack.name;
+                    var checkid = checktrack.id;
+                    var newartists = checktrack.artists;
+                    var newprimaryartist = newartists[0].name;
+                    var newinfo = {"id": checkid, "artist": newprimaryartist, "title": title, "playing": playing}
+                    if (checkid != track) {
+                      imagemaker(newinfo);
+                      track = checkid;
+                    };
+                  }else {
+                    colorswitcher('../styles/prompt.css');
+                    document.getElementById("nowplaying").innerHTML = 'Play some music to see some colors!';
+                  }
+                } else {
                   colorswitcher('../styles/prompt.css');
                   document.getElementById("nowplaying").innerHTML = 'Play some music to see some colors!';
                 }
